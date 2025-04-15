@@ -1,33 +1,30 @@
 name: Python CI
 
-#trigger the workflow we need to define events
 on:
-    push:
-        branches:
-           - main
-    pull_request:
-        branches:
-           - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-    test:
-        runs-on: ubuntu-latest #containers/ubuntu/windows/mac-os
+  test:
+    runs-on: ubuntu-latest
 
-        steps:
-            #step 1 check out teh code from repository
-            - name: Check out code
-              uses: actions/checkout@v2
-            #step 2: set up python enviornment
-            - name: Set up python
-              uses: actions/setup-python@v2
-              with:
-                python-version: '3.8'
+    steps:
+      - name: 'Check out code'
+        uses: actions/checkout@v2
 
-            #step 3: install dependacies
-            - name: Install dependancies
-              run: |
-                python -m pip install --upgrade pip
-                pip install -r requirements.txt
+      - name: 'Set up Python'
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-            #step4: Run tests
-            - name: Run tests
-              run: pytest
+      - name: 'Install dependencies'
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 'Run tests'
+        run: pytest
